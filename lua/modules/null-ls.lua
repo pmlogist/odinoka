@@ -10,6 +10,9 @@ local sources = {
   null_ls.builtins.formatting.prettierd.with {
     disabled_filetypes = { "html" },
   },
+  null_ls.builtins.diagnostics.curlylint.with {
+    filetypes = { "jinja.html", "htmldjango", "jinja" },
+  },
 }
 
 null_ls.setup { sources = sources }

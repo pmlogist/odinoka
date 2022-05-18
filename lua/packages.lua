@@ -230,4 +230,6 @@ return packer.startup(function()
       require("core.keymappings").lazygit()
     end,
   }
+
+  use { "Glench/Vim-Jinja2-Syntax" }
 end)
