@@ -190,8 +190,7 @@ return packer.startup(function()
     "ms-jpq/chadtree",
     disable = not modules.chadtree.enable,
     branch = "chad",
-    -- FIXME: Adapt for NixOS or others
-    run = 'nix-shell -p python3 --run "python -m chadtree deps"',
+    run = "python3 -m chadtree deps",
     setup = function()
       require("core.keymappings").chadtree()
     end,

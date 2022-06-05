@@ -10,6 +10,9 @@ end
 local util = lspconfig.util
 
 return {
+  ansiblels = {
+    cmd = { lsp_path .. "/ansiblels/bin/ansible-language-server", "--stdio" },
+  },
   bashls = {
     cmd = {
       lsp_path .. "/bash/node_modules/.bin/bash-language-server",
