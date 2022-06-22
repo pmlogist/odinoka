@@ -10,18 +10,11 @@ end
 local util = lspconfig.util
 
 return {
-  ansiblels = {
-    cmd = { lsp_path .. "/ansiblels/bin/ansible-language-server", "--stdio" },
-  },
-  bashls = {
-    cmd = {
-      lsp_path .. "/bash/node_modules/.bin/bash-language-server",
-      "start",
-    },
-    filetypes = { "bash", "sh", "zsh" },
-  },
+  ansiblels = {},
+  -- bashls = {
+  --   filetypes = { "bash", "sh", "zsh" },
+  -- },
   cssmodules_ls = {
-    cmd = { lsp_path .. "/cssmodules_ls/node_modules/.bin/cssmodules-language-server" },
     init_options = {
       camelCase = "dashes",
     },
@@ -31,11 +24,6 @@ return {
     end,
   },
   cssls = {
-    cmd = {
-      "node",
-      lsp_path .. "/cssls/node_modules/.bin/vscode-css-language-server",
-      "--stdio",
-    },
     on_attach = function(client, bufnr)
       client.resolved_capabilities.goto_definition = false
       common_on_attach(client, bufnr)
@@ -45,27 +33,14 @@ return {
     },
   },
   dockerls = {
-    cmd = { lsp_path .. "/dockerfile/node_modules/.bin/docker-langserver", "--stdio" },
     filetypes = { "dockerfile" },
     root_dir = util.root_pattern("Dockerfile", "docker-compose.yml"),
   },
   gopls = {
-    cmd = { lsp_path .. "/go/gopls" },
     filetypes = { "go" },
   },
-  html = {
-    cmd = {
-      "node",
-      lsp_path .. "/html/node_modules/.bin/vscode-html-language-server",
-      "--stdio",
-    },
-  },
+  html = {},
   jsonls = {
-    cmd = {
-      "node",
-      lsp_path .. "/jsonls/node_modules/.bin/vscode-json-language-server",
-      "--stdio",
-    },
     on_attach = function(client, bufnr)
       common_on_attach(client, bufnr)
       client.resolved_capabilities.document_formatting = false
@@ -85,23 +60,18 @@ return {
       },
     },
   },
-
-  pyright = {
-    cmd = { lsp_path .. "/python/node_modules/.bin/pyright-langserver", "--stdio" },
-  },
+  pyright = {},
   rnix = {
     on_attach = function(client, bufnr)
       common_on_attach(client, bufnr)
       client.resolved_capabilities.document_formatting = false
     end,
-    cmd = { lsp_path .. "/rnix/bin/rnix-lsp" },
   },
   sumneko_lua = {
     on_attach = function(client, bufnr)
       common_on_attach(client, bufnr)
       client.resolved_capabilities.document_formatting = false
     end,
-    cmd = { lsp_path .. "/sumneko_lua/extension/server/bin/lua-language-server" },
     settings = {
       Lua = {
         runtime = {
@@ -122,10 +92,6 @@ return {
     },
   },
   stylelint_lsp = {
-    cmd = {
-      lsp_path .. "/stylelint_lsp/node_modules/.bin/stylelint-lsp",
-      "--stdio",
-    },
     filetypes = {
       "css",
       "less",
@@ -139,21 +105,14 @@ return {
       client.resolved_capabilities.document_formatting = false
     end,
   },
-  svelte = {
-    cmd = { lsp_path .. "/svelte/node_modules/.bin/" .. "svelteserver", "--stdio" },
-  },
+  svelte = {},
   tsserver = {
-    cmd = { lsp_path .. "/tsserver/node_modules/.bin/typescript-language-server", "--stdio" },
     on_attach = function(client, bufnr)
       common_on_attach(client, bufnr)
       client.resolved_capabilities.document_formatting = false
     end,
   },
   yamlls = {
-    cmd = {
-      lsp_path .. "/yaml/node_modules/.bin/yaml-language-server",
-      "--stdio",
-    },
     schemas = {
       ["https://gitlab.com/gitlab-org/gitlab/-/raw/master/app/assets/javascripts/editor/schema/ci.json"] = "/.gitlab-ci.yml",
       ["https://json.schemastore.org/github-action.json"] = "/.github/actions/*",

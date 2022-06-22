@@ -2,12 +2,6 @@ local servers = require "lsp.servers"
 local common_on_attach = require "lsp.on_attach"
 local common_capabilities = require "lsp.capabilities"
 
-local ok, lspconfig = pcall(require, "lspconfig")
-if not ok then
-  print "test"
-  return false
-end
-
 local signs = {
   Error = "",
   Information = "",
@@ -21,10 +15,6 @@ for type, icon in pairs(signs) do
 end
 
 local lsp_publish_diagnostics_options = {
-  --virtual_text = {
-  --  prefix = "",
-  --  spacing = 0,
-  --},
   virtual_text = false,
   signs = true,
   underline = true,
@@ -41,6 +31,18 @@ vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
 vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
   border = "single",
 })
+
+local ok, lspconfig = pcall(require, "lspconfig")
+if not ok then
+  return
+end
+
+local ok, lspinstaller = pcall(require, "nvim-lsp-installer")
+if not ok then
+  return
+end
+
+lspinstaller.setup {}
 
 for server_name, default_setup in pairs(servers) do
   local setup = default_setup

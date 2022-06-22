@@ -14,11 +14,11 @@ local theme_name = "tomorrow"
 --end
 --local gtk_theme = io.popen("dconf read /org/gnome/desktop/interface/gtk-theme", "r"):read():gsub("%'", "")
 
-theme_name = "tomorrow_night"
+-- theme_name = "tomorrow_night"
 --if gtk_theme ~= "Adwaita-dark" then
 --  theme_name = "tomorrow"
 --else
---  theme_name = "tomorrow_night"
+theme_name = "tomorrow_night"
 --end
 
 local ok, theme = pcall(require, "themes." .. theme_name)
