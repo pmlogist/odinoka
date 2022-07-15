@@ -13,6 +13,7 @@ G = {
     colorizer = { enable = true },
     comment = { enable = true },
     cmp = { enable = true },
+    dressing = { enable = true },
     feline = { enable = true },
     icons = { enable = true },
     lsp = { enable = true },

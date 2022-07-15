@@ -92,16 +92,21 @@ return packer.startup(function()
     module = "telescope",
     cmd = "Telescope",
     requires = {
-      {
-        "nvim-telescope/telescope-fzf-native.nvim",
-        run = "make",
-      },
+      { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
     },
     config = function()
       require "modules.telescope"
     end,
     setup = function()
       require("core.keymappings").telescope()
+    end,
+  }
+  use {
+    "stevearc/dressing.nvim",
+    disable = not modules.dressing.enable,
+
+    config = function()
+      require "modules.dressing"
     end,
   }
 
