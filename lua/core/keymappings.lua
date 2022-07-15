@@ -1,99 +1,89 @@
 local M = {}
 
-local map = require "utils.map"
-
-M.keys = {
-  base = {
-    close_buffer = "<leader>x",
-    buffers = {
-      prev = "<S-Tab>",
-      next = "<Tab>",
-    },
-  },
-  comment = {
-    toggle = "<leader>/",
-  },
-  chardtree = {
-    toggle = "<C-b>",
-    focus = "<leader>b",
-  },
-  telescope = {
-    buffers = "<leader>fb",
-    find_files = "<leader>ff",
-    find_hiddenfiles = "<leader>fa",
-    git_commits = "<leader>cm",
-    git_status = "<leader>gt",
-    help_tags = "<leader>fh",
-    live_grep = "<leader>fw",
-    oldfiles = "<leader>fo",
-  },
-  lazygit = {
-    toggle = "<leader>gg",
-  },
-}
-
 vim.g.mapleader = " "
 
+local opts = { noremap = true, silent = true }
+
 M.base = function()
-  local m = M.keys.base
-
   -- Don't copy the replaced text after pasting in visual mode
-  map("v", "p", '"_dP')
-
+  vim.keymap.set("v", "p", '"_dP')
   -- Don't yank text on delete ( dd )
-  map({ "n", "v" }, "d", '"_d')
+  vim.keymap.set({ "n", "v" }, "d", '"_d')
 
   -- Allow moving the cursor through wrapped lines with j, k, <Up> and <Down>
   -- http://www.reddit.com/r/vim/comments/2k4cbr/problem_with_gj_and_gk/
   -- empty mode is same as using :map
   -- also don't use g[j|k] when in operator pending mode, so it doesn't alter d, y or c behaviour
-  map("", "j", 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', { expr = true })
-  map("", "k", 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', { expr = true })
-  map("", "<Down>", 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', { expr = true })
-  map("", "<Up>", 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', { expr = true })
-
+  vim.keymap.set("", "j", 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', { expr = true })
+  vim.keymap.set("", "k", 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', { expr = true })
+  vim.keymap.set("", "<Down>", 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', { expr = true })
+  vim.keymap.set("", "<Up>", 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', { expr = true })
   -- use ESC to turn off search highlighting
-  map("n", "<Esc>", ":noh <CR>")
+  vim.keymap.set("n", "<Esc>", "<cmd>noh<cr>", opts)
+  -- Close window + keep slip buffers:  https://stackoverflow.com/a/19619038
 
-  -- Close window + keep slip buffers
-  -- https://stackoverflow.com/a/19619038
-  map("n", m.close_buffer, ":b#<bar>bd#<CR>")
+  local m = {
+    buffers = {
+      close = "<leader>x",
+      prev = "<S-Tab>",
+      next = "<Tab>",
+    },
+  }
 
-  map("n", m.buffers.prev, ":bprevious <CR>")
-  map("n", m.buffers.next, ":bnext <CR>")
+  vim.keymap.set("n", m.buffers.close, "<cmd>b#<bar>bd#<cr>", opts)
+  vim.keymap.set("n", m.buffers.prev, "<cmd>bprevious<cr>", opts)
+  vim.keymap.set("n", m.buffers.next, "<cmd>bnext<cr>", opts)
 end
 
 M.comment = function()
-  local m = M.keys.comment
+  local m = {
+    toggle = "<leader>/",
+  }
 
-  map("n", m.toggle, ":CommentToggle <CR>")
-  map("v", m.toggle, ":CommentToggle <CR>")
+  vim.keymap.set("n", m.toggle, "<cmd>CommentToggle<cr>", opts)
+  vim.keymap.set("v", m.toggle, "<cmd>CommentToggle<cr>", opts)
 end
 
 M.chadtree = function()
-  local m = M.keys.chardtree
+  local m = {
+    toggle = "<C-b>",
+    focus = "<leader>b",
+  }
 
-  map("n", m.toggle, ":CHADopen <CR>")
-  map("n", m.focus, ":CHADopen --always-focus <CR>")
+  vim.keymap.set("n", m.toggle, "<cmd>CHADopen<cr>", opts)
+  vim.keymap.set("n", m.focus, "<cmd>CHADopen --always-focus<cr>", opts)
 end
 
 M.lazygit = function()
-  local m = M.keys.lazygit
+  local m = {
+    toggle = "<leader>gg",
+  }
 
-  map("n", m.toggle, ":LazyGit <CR>")
+  vim.keymap.set("n", m.toggle, "<cmd>LazyGit<cr>", opts)
 end
 
 M.telescope = function()
-  local m = M.keys.telescope
+  local m = {
+    buffers = "<leader>fb",
+    find_files = "<leader>ff",
+    find_hiddenfiles = "<leader>fa",
+    diagnostics = "<leader>dl",
+    git_commits = "<leader>fc",
+    git_status = "<leader>fs",
+    help_tags = "<leader>fh",
+    live_grep = "<leader>fw",
+    oldfiles = "<leader>fo",
+  }
 
-  map("n", m.buffers, ":Telescope buffers <CR>")
-  map("n", m.find_files, ":Telescope find_files <CR>")
-  map("n", m.find_hiddenfiles, ":Telescope find_files hidden=true <CR>")
-  map("n", m.git_commits, ":Telescope git_commits <CR>")
-  map("n", m.git_status, ":Telescope git_status <CR>")
-  map("n", m.help_tags, ":Telescope help_tags <CR>")
-  map("n", m.live_grep, ":Telescope live_grep <CR>")
-  map("n", m.oldfiles, ":Telescope oldfiles <CR>")
+  vim.keymap.set("n", m.buffers, "<cmd>Telescope buffers<cr>", opts)
+  vim.keymap.set("n", m.find_files, "<cmd>Telescope find_files<cr>", opts)
+  vim.keymap.set("n", m.find_hiddenfiles, "<cmd>Telescope find_hiddenfiles<cr>", opts)
+  vim.keymap.set("n", m.diagnostics, "<cmd>Telescope diagnostics<cr>", opts)
+  vim.keymap.set("n", m.git_commits, "<cmd>Telescope git_commits<cr>", opts)
+  vim.keymap.set("n", m.git_status, "<cmd>Telescope git_status<cr>", opts)
+  vim.keymap.set("n", m.help_tags, "<cmd>Telescope help_tags<cr>", opts)
+  vim.keymap.set("n", m.live_grep, "<cmd>Telescope live_grep<cr>", opts)
+  vim.keymap.set("n", m.oldfiles, "<cmd>Telescope oldfiles<cr>", opts)
 end
 
 return M
